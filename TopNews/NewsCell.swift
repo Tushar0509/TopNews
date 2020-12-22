@@ -86,8 +86,7 @@ class NewsCell: UICollectionViewCell {
         
         bgview.addSubview(betweenview)
         _ = betweenview.anchor(top: newstitle.bottomAnchor, left: profileimage.rightAnchor, bottom: publishedat.topAnchor, right: bgview.rightAnchor, topConstant: 10, leftConstant: 10, bottomConstant: 0, rightConstant: 10, widthConstant: bgview.frame.width, heightConstant: 10)
-        
-        //   _ = publishedat.anchor(top: author.bottomAnchor, left: bgview.leftAnchor, bottom: nil, right: bgview.rightAnchor, topConstant: 5, leftConstant: 5, bottomConstant: 0, rightConstant: 5, widthConstant: contentView.frame.width, heightConstant: bgview.frame.height/6)
+
     }
     override init(frame: CGRect) {
         super.init(frame: frame)

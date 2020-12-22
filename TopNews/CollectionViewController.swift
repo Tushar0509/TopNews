@@ -169,25 +169,3 @@ extension UIImage {
     }
   }
 }
-
-//class DetailsViewController: UIViewController {
-//    lazy var bgview: UIView = {
-//        let view = UIView()
-//         view.backgroundColor = UIColor.red
-//         view.layer.cornerRadius = 10.0
-//         return view
-//    }()
-//    func setuplayout(){
-//        var HVC: HomeViewController?
-//
-//        view.addSubview(bgview)
-//        _ = bgview.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 15, bottomConstant: 0, rightConstant: 15, widthConstant: view.frame.width - 10, heightConstant: view.frame.height)
-//    }
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//    setuplayout()
-//
-//    }
-//}
-
-
