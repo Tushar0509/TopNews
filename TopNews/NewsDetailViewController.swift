@@ -54,13 +54,11 @@ class NewsDetailViewController: UIViewController {
     }()
     lazy var urlbutton: UIButton = {
        let button = UIButton()
-       // button.setTitle(HVC?.article[IndexPath as! Int].url, for: .normal)
         button.setTitle("Read More", for: .normal)
         button.tintColor = UIColor.white
         button.backgroundColor = UIColor.systemBlue
         button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(url_tapped), for: .touchUpInside)
-       // button.titleLabel?.adjustsFontSizeToFitWidth = true
         return button
     }()
     lazy var Content: UITextView = {
@@ -68,7 +66,6 @@ class NewsDetailViewController: UIViewController {
         label.text = HVC!.article[IndexPath as! Int].content
         label.inputView = UIView()
         label.font = UIFont(name: "Avenir", size: 18)
-    //    label.adjustsFontSizeToFitWidth = true
         label.textColor = UIColor.black
         label.backgroundColor = UIColor.systemOrange
         return label
