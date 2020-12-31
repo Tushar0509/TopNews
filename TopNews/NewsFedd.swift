@@ -9,7 +9,7 @@ import Foundation
 
 struct NewFeed: Codable {
     var status: String = "" //if you know its never gonna be nil
-    var totalResults: Int = 0
+    var totalResults:Int = 0
     var articles:[Article] //Not sure if it comes back as nil
 }
 struct Article: Codable {

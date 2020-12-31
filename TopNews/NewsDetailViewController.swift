@@ -65,6 +65,7 @@ class NewsDetailViewController: UIViewController {
         let label = UITextView()
         label.text = HVC!.article[IndexPath as! Int].content
         label.inputView = UIView()
+       // label.isUserInteractionEnabled = false
         label.font = UIFont(name: "Avenir", size: 18)
         label.textColor = UIColor.black
         label.backgroundColor = UIColor.systemOrange
@@ -99,7 +100,7 @@ class NewsDetailViewController: UIViewController {
         bgview.addSubview(Title)
         _ = Title.anchor(top: profileimage.bottomAnchor, left: bgview.leftAnchor, bottom: nil, right: bgview.rightAnchor, topConstant: 5, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: view.frame.width, heightConstant: view.frame.height/8)
         bgview.addSubview(Author)
-        _ = Author.anchor(top: Title.bottomAnchor, left: bgview.leftAnchor, bottom: nil, right: bgview.rightAnchor, topConstant: -5, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: view.frame.width, heightConstant: view.frame.height/8)
+        _ = Author.anchor(top: Title.bottomAnchor, left: bgview.leftAnchor, bottom: nil, right: bgview.rightAnchor, topConstant: -5, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: view.frame.width, heightConstant: view.frame.height/12)
         bgview.addSubview(Content)
         _ = Content.anchor(top: Author.bottomAnchor, left: bgview.leftAnchor, bottom: nil, right: bgview.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: view.frame.width, heightConstant: view.frame.height/4)
         bgview.addSubview(urlbutton)
@@ -109,8 +110,6 @@ class NewsDetailViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-      
-  
         setuplayout()
         print("I m Here")
         print(HVC!.article[1].urlToImage!)

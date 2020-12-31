@@ -11,6 +11,16 @@ import Foundation
 class ViewController: UIViewController {
     var apikey = "832c74a7c14b43cfbdb837cf8a0b140c"
     var HVC: HomeViewController?
+    lazy var ParsingError: UILabel = {
+        let lbl = UILabel()
+        return lbl
+    }()
+    lazy var blinker_btn:UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .black
+        button.layer.cornerRadius = 15
+        return button
+    }()
     lazy var ctg_label: UILabel = {
         let label = UILabel()
         label.text = "Categories"
@@ -89,7 +99,8 @@ class ViewController: UIViewController {
         let TVC = HomeViewController(collectionViewLayout: UICollectionViewFlowLayout())
         TVC.VC = self
         TVC.ctg_label.text = "Bitcoin"
-        TVC.category = "everything?q=bitcoin&from=2020-11-19&sortBy=publishedAt"
+        TVC.category = "everything?q=bitcoin&from=2020-12-31&sortBy=publishedAt"
+        //http://newsapi.org/v2/everything?q=bitcoin&from=2020-11-27&sortBy=publishedAt&apiKey=832c74a7c14b43cfbdb837cf8a0b140c
         TVC.modalPresentationStyle = .fullScreen
         self.present(TVC, animated: true, completion: nil)
     }
@@ -97,7 +108,7 @@ class ViewController: UIViewController {
         let TVC = HomeViewController(collectionViewLayout: UICollectionViewFlowLayout())
         TVC.VC = self
         TVC.ctg_label.text = "Apple"
-        TVC.category = "everything?q=apple&from=2020-12-18&to=2020-12-18&sortBy=popularity"
+        TVC.category = "everything?q=apple&from=2020-12-26&to=2020-12-31&sortBy=popularity"
         TVC.modalPresentationStyle = .fullScreen
         self.present(TVC, animated: true, completion: nil)
     }
@@ -134,9 +145,10 @@ class ViewController: UIViewController {
         self.present(TVC, animated: true, completion: nil)
     }
     let urlString = "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=832c74a7c14b43cfbdb837cf8a0b140c"
-    
     var article: [Article] = []
     func setuplayout(){
+        view.addSubview(blinker_btn)
+        _ = blinker_btn.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, topConstant: 20, leftConstant: 10, bottomConstant: 0, rightConstant: 0, widthConstant: 30, heightConstant: 30)
         view.addSubview(ctg_label)
         _ = ctg_label.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: view.frame.height/20, leftConstant: 10, bottomConstant: 0, rightConstant: 10, widthConstant: view.frame.width, heightConstant: view.frame.height/12)
         view.addSubview(bitcoin_btn)
@@ -152,9 +164,23 @@ class ViewController: UIViewController {
         view.addSubview(Tech_btn)
         _ = Tech_btn.anchor(top: WSJ_btn.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: view.frame.height/24, leftConstant: view.frame.width/6, bottomConstant: 0, rightConstant: view.frame.width/6, widthConstant: view.frame.width/4, heightConstant: view.frame.height/10)
     }
+    //var article: [Article] = []
+    var i = 0
     override func viewDidLoad() {
         super.viewDidLoad()
     setuplayout()
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (timer) in
+            if (self.i%2 == 0){
+                self.blinker_btn.backgroundColor = .blue
+                self.i += 1
+            }
+            else{
+                self.blinker_btn.backgroundColor = .yellow
+                self.i += 1
+            }
+           
+            
+        }
         view.backgroundColor = UIColor.white
 
         let url =  URL(string: urlString)
@@ -171,7 +197,7 @@ class ViewController: UIViewController {
                let newsfeed = try decoder.decode(NewFeed.self, from: data!)
                     print("News Feed")
                  //   print(newsfeed)
-                    print(newsfeed.articles.count)
+                    print(newsfeed.articles.count) 
                     self.article.count == newsfeed.articles.count
                     self.article.append(contentsOf: newsfeed.articles)
                     print("Elements of Article Array")
@@ -183,6 +209,9 @@ class ViewController: UIViewController {
                 }
                 catch{
                     print("Error in parsing")
+                    self.view.addSubview(self.ParsingError)
+                    _ = self.ParsingError.anchor(top: self.view.topAnchor, left: self.view.leftAnchor, bottom: nil, right: nil, topConstant: self.view.frame.height/3, leftConstant: self.view.frame.width/4, bottomConstant: 0, rightConstant: self.view.frame.width/4, widthConstant: self.view.frame.width/4, heightConstant: self.view.frame.height/12)
+                    self.ParsingError.text = "Error In Parsing"
                 }
                 
             }
