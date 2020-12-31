@@ -21,9 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 window = UIWindow(frame: windowScene.coordinateSpace.bounds)
                 window?.windowScene = windowScene
                 window?.rootViewController = ViewController()
-                //window?.rootViewController = HomeViewController(collectionViewLayout: UICollectionViewFlowLayout())
-        
-        
+        //window?.rootViewController = WebViewController()
+        //window?.rootViewController = HomeViewController(collectionViewLayout: UICollectionViewFlowLayout())
                 window?.makeKeyAndVisible()
     }
 

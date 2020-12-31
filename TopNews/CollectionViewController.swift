@@ -12,6 +12,14 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
  
     var NDVC: NewsDetailViewController?
     var VC: ViewController?
+    var WVC: WebViewController?
+
+    lazy var blinker_btn:UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .black
+        button.layer.cornerRadius = 15
+        return button
+    }()
     let swiped_right = UISwipeGestureRecognizer()
     lazy var ctg_label: UILabel = {
         let label = UILabel()
@@ -42,8 +50,11 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         self.present(VC, animated: true, completion: nil)
     }
     func setuplayout(){
+        
         view.addSubview(topview)
         _ = topview.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: view.frame.width, heightConstant: 75)
+        topview.addSubview(blinker_btn)
+        _ = blinker_btn.anchor(top: topview.topAnchor, left: topview.leftAnchor, bottom: nil, right: nil, topConstant: 20, leftConstant: 10, bottomConstant: 0, rightConstant: 0, widthConstant: 30, heightConstant: 30)
         topview.addSubview(ctg_label)
         _ = ctg_label.anchor(top: topview.topAnchor, left: topview.leftAnchor, bottom: nil, right: topview.rightAnchor, topConstant: 17.5, leftConstant: 0, bottomConstant: 17.5, rightConstant: 0, widthConstant: topview.frame.width, heightConstant: topview.frame.height/3)
     }
@@ -63,14 +74,32 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     
     var article: [Article] = []
     
+    var i = 0
+    var globalerror = ""
+    var globalmessage = ""
+    func showAlert() {
+        let alert = UIAlertController(title: globalerror, message: globalmessage, preferredStyle: .alert)
+        self.present(alert, animated: true, completion: nil)
+        Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false, block: { _ in alert.dismiss(animated: true, completion: nil)} )
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (timer) in
+            if (self.i%2 == 0){
+                self.blinker_btn.backgroundColor = .systemBlue
+                self.i += 1
+            }
+            else{
+                self.blinker_btn.backgroundColor = .green
+                self.i += 1
+            }
+        }
         let urlString = "https://newsapi.org/v2/\(category)&apiKey=832c74a7c14b43cfbdb837cf8a0b140c"
         let url =  URL(string: urlString)
         guard url != nil else{
             return
-            
         }
         let session = URLSession.shared
         let datatask = session.dataTask(with: url!) { (data, response, error) in
@@ -93,7 +122,16 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
                     print(self.article[1].author ?? "No Available")
                 }
                 catch{
+                    self.globalerror = "Error In Parsing Data"
+                    self.showAlert()
+                    
                     print("Error in parsing")
+        
+                    
+//                    self.globalerror = "Error In Api Parsing"
+//                    self.showAlert()
+                    
+                
                 }
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
@@ -169,3 +207,25 @@ extension UIImage {
     }
   }
 }
+
+//class DetailsViewController: UIViewController {
+//    lazy var bgview: UIView = {
+//        let view = UIView()
+//         view.backgroundColor = UIColor.red
+//         view.layer.cornerRadius = 10.0
+//         return view
+//    }()
+//    func setuplayout(){
+//        var HVC: HomeViewController?
+//
+//        view.addSubview(bgview)
+//        _ = bgview.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 15, bottomConstant: 0, rightConstant: 15, widthConstant: view.frame.width - 10, heightConstant: view.frame.height)
+//    }
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//    setuplayout()
+//
+//    }
+//}
+
+
